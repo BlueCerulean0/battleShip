@@ -1,10 +1,10 @@
 export class Ship {
 
-  constructor(length, width=null, hitCount=0, sunk=false) {
+  constructor(length, width=[]) {
 
     this.length = length
-    this.hitCount = hitCount
-    this.sunk = sunk
+    this.hitCount = 0
+    this.sunk = false
     this.width = width
   }
 
@@ -20,13 +20,17 @@ export class Ship {
     } else return false;
   }
   returnRange() {
-    if (this.inRange) return this.inRange
+    if (this.width) return this.width;
   }
 
   incrementHit() {
     this.hitCount++;
     if (this.hitCount === this.length) this.sunk = true;
   }
+  sinkTheShip() {
+    this.sunk = true;
+  }
+
 }
 
 
