@@ -17,6 +17,14 @@ export class GameBoard {
     }
     return inside;
   }
+  
+  genRanLoc() {
+    const ranX = Math.floor(Math.random() * (7 - 0 + 1)) + 0; 
+    const ranY = Math.floor(Math.random() * (7 - 0 + 1)) + 0;
+      
+    const ranLocation = [ranX, ranY];
+    return ranLocation;
+  }
 
   placeShip(length, location) {
     
@@ -41,9 +49,7 @@ export class GameBoard {
         console.error('location occupied');
         return false;
 
-      } 
-
-      
+      }
     };
     
     for (let element of locationInbetween) {
@@ -54,6 +60,39 @@ export class GameBoard {
     this.ships.set(length.toString(), new Ship(length, locationInbetween));
     return true;
   }
+
+  placeRandom(ammount = 4) {
+    
+    let lenPointer = 0
+    while (lenPointer < ammount) { 
+    
+      const ranLocation = this.genRanLoc();
+      let locInside = this.inBetween(ranLocation, [ranLocation[0] + lenPointer, ranLocation[1]]);
+      
+      console.log(locInside);
+
+      let conflict = false;
+      for (let element of locInside) {
+        if (this.used.has(element.toString())) {
+          conflict = true;
+          break;
+        };
+      }
+      if (conflict) {
+        console.log("conflict")
+        continue;
+      }
+      
+      const conflict2 = this.placeShip(lenPointer, ranLocation)
+      if (!conflict2) {
+        console.log("conflict2"); 
+        continue;
+      }
+      lenPointer++;
+    }
+    
+  }
+  
 
   hitOrMiss(location) {
     

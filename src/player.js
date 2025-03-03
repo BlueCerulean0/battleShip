@@ -15,13 +15,17 @@ export class Player {
   }
   
   reciveAttack(location) {
-    const hitOrMissBool = gameBoard.hitOrMiss(location);
+    const hitOrMissBool = this.gameBoard.hitOrMiss(location);
     if (!hitOrMissBool) {
       this.missed = this.gameBoard.returnMissed();
-      return  
+
+      return false 
     }
     this.hit = this.gameBoard.returnHit();
-    if (this.used.length === this.used.length) this.gameOver = true;
+    if (this.hit.length === this.used.length) this.gameOver = true;
+
+
+    return true;
   }
   
   makeShip(length, location) {
@@ -32,6 +36,11 @@ export class Player {
     
     this.used = this.gameBoard.returnUsed();
     return true;
+  }  
+  
+  placeRan(ammount) {
+    this.gameBoard.placeRandom(ammount);
+    this.used = this.gameBoard.returnUsed();
   }
 }
 

@@ -47,7 +47,15 @@ body {
 
 .player > button.placed {
 
-  background-color: blueviolet;
+  background-color: green;
+}
+
+.computer > button.miss, .player > button.playerMiss {
+  background-color: orangered;
+}
+
+.player > button.playerHit, .computer > button.hit {
+  background-color: goldenrod;
 }
 
 @media (max-width: 768px) {
@@ -68,4 +76,34 @@ body {
   .player > button, .computer > button {
     padding: 2px;
   }
+}
+
+.winPop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  border-radius: 15px;
+  width: 400px;
+  height: 200px;
+  z-index: 2;
+  position: fixed;
+  background-color: rgba(0, 0, 3, 0.096);
+  backdrop-filter: blur(4px);
+  
+  top: 0;
+  left: 50%;
+  visibility: hidden;
+  transform: translate(-50%, -50%) scale(0.1);
+  transition: transform 0.4s, top 0.4s;
+}
+
+.winPopOpen {
+   
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
 }

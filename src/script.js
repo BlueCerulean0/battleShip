@@ -34,7 +34,7 @@ const instruction = document.createElement('h1');
 instruction.textContent = "Place your ships!";
 container.append(instruction);
 
-let player1 = new Player("Roy");
+const player1 = new Player("Roy");
 
 let shipCounter = 0;
 console.log("shipCounter: " + shipCounter)
@@ -74,23 +74,81 @@ const handleShips = (event) => {
       }
     }
   }
-
 }
 
 player.addEventListener('click', handleShips)
 
+container.addEventListener('click', (event) => {
+  
+  if (event.target.classList.contains('start')) {
+    
+    container.removeChild(event.target);
+    computer.style.display = 'grid'
+  }
+})
+
+
+const playerCom = new Player("Computer");
+playerCom.placeRan(4);
 
 
 
+function gameLoop(event) {
+  if (event.target.matches("button")) {
+    
+    const locClass = event.target.classList.toString();
+    let locClassArr = [];
+    locClassArr.push(parseInt(locClass[0]));
+    locClassArr.push(parseInt(locClass[2]));
 
-// let game = new GameBoard;
+    const attacked = playerCom.reciveAttack(locClassArr);
+    
+    if (attacked) {
 
-// console.log(game)
+      event.target.classList.add('hit');
+      return
+    }
 
-// game.placeShip(2, [1,0])
+    event.target.classList.add('miss');
+  }
+  
+  attackPlyaer()
 
-// console.log(game)
 
-// game.placeShip(1, [0,0])
-// game.placeShip(1, [0,1])
-// console.log(game)
+  if (player1.gameOver) {
+    const winPop = document.querySelector('.winPop');
+    const msg = document.createElement('p');
+    msg.textContent = "COMPUTER WINS"
+    winPop.prepend(msg);
+    winPop.classList.add('winPopOpen')
+    
+    computer.removeEventListener("click", gameLoop)
+  } else if (playerCom.gameOver) {
+    
+    const winPop = document.querySelector('.winPop');
+    const msg = document.createElement('p');
+    msg.textContent = "Player Wins!"
+    winPop.prepend(msg);
+    winPop.classList.add('winPopOpen')
+    computer.removeEventListener("click", gameLoop)
+  }
+
+}
+
+computer.addEventListener("click", gameLoop)
+
+function attackPlyaer() {
+
+  const ranPlayerLoc = player1.gameBoard.genRanLoc();
+  const attacked = player1.reciveAttack(ranPlayerLoc);
+  
+  const theButton = document.getElementsByClassName(ranPlayerLoc.toString());
+
+  if (attacked) {  
+    theButton[0].classList.add('playerHit');
+    return;
+  }
+  
+  theButton[0].classList.add('playerMiss');
+ 
+}
