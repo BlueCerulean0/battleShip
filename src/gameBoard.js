@@ -4,7 +4,8 @@ export class GameBoard {
   constructor() {
     this.ships = new Map();
     this.used = new Map();
-    this.hit = new Set();
+    this.hit = new Map();
+    this.miss = new Map();
   }
   
   inBetween(start, end) {
@@ -33,34 +34,38 @@ export class GameBoard {
   
     let locationInbetween = this.inBetween(startToEnd[0], startToEnd[1])
 
-    locationInbetween.forEach((element) => {
+    for (let element of locationInbetween) {
       
       if (this.used.has(element.toString())) {
         
         console.error('location occupied');
-        return;
+        return false;
 
-      } else {
+      } 
 
-        this.used.set(element.toString(), length);
-      }
-    });
+      
+    };
+    
+    for (let element of locationInbetween) {
+      
+      this.used.set(element.toString(), length);
+    }
 
-    this.ships.set(length.toString(), new Ship(length, locationInbetween)); 
+    this.ships.set(length.toString(), new Ship(length, locationInbetween));
+    return true;
   }
-
 
   hitOrMiss(location) {
     
     if (this.used.has(location.toString())) {
       
-      const key = this.used.get(location.toString()) 
+      const key = this.used.get(location.toString())
       let theShip = this.ships.get(key.toString())
       
       if (!this.hit.has(location.toString())) {
 
         theShip.incrementHit();
-        this.hit.add(location.toString());
+        this.hit.set(location.toString(), location);
       }
       
       if (theShip.returnLen() === theShip.returnHit()) {
@@ -68,9 +73,52 @@ export class GameBoard {
         theShip.sinkTheShip();
       }
       return true;
-    }
+
+    } else if (this.miss.has(location.toString())) return false;
     
+
+    this.miss.set(location.toString(),location)
     return false
   }
 
+  returnMissed() {
+    if (this.miss) {
+      
+      let eachMissed = [];
+      this.miss.forEach((value) => {
+
+        eachMissed.push(value);
+      });
+      
+      return eachMissed;
+    }
+  }
+
+  returnHit() {
+    if (this.hit) {
+      
+      let eachHit = [];
+      this.hit.forEach((value) => {
+
+        eachHit.push(value);
+      });
+      
+      return eachHit;
+    }
+  }
+  
+  returnUsed() {
+
+    if (this.used) {
+      
+      let eachUsed = [];
+      this.used.forEach((value, key) => {
+
+        eachUsed.push(key);
+      });
+      
+      return eachUsed;
+    }
+  
+  }
 }

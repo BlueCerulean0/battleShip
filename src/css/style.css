@@ -1,4 +1,71 @@
 body {
   background-color: black;
   color: white;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.player, .computer {
+  display: grid;
+  grid-template-columns: repeat(8, 50px);
+  grid-template-rows: repeat(8, 50px);
+  justify-content: center;
+  align-content: center;
+  background-color: white;
+  width: 50vw;
+  height: 50vh;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+.player > button, .computer > button {
+  background-color: #007bff;
+  padding: 20px;
+  outline: none;
+  border: 2px solid white;
+  transition: all 0.3s ease-in-out;
+  border-radius: 3.5px;
+}
+
+.player > button:active, .computer > button:active {
+
+  transform: scale(0.9);
+}
+
+.player > button:hover, .computer > button:hover {
+  background-color: cyan;
+  border: 2px solid orangered;
+}
+
+.player > button.placed {
+
+  background-color: blueviolet;
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .player, .computer {
+    width: 80vw;
+    height: 80vw;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+
+  .player > button, .computer > button {
+    padding: 2px;
+  }
 }
