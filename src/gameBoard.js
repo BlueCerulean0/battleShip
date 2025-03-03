@@ -36,7 +36,7 @@ export class GameBoard {
       startToEnd[1][0] > 7 || startToEnd[1][0] < 0 ||
       startToEnd[1][1] > 7 || startToEnd[1][1] < 0   
     ) {
-      console.error("Location out of bounds");
+      //console.error("Location out of bounds");
       return;
     }
   
@@ -46,7 +46,7 @@ export class GameBoard {
       
       if (this.used.has(element.toString())) {
         
-        console.error('location occupied');
+        //console.error('location occupied');
         return false;
 
       }

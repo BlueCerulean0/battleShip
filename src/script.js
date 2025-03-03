@@ -1,6 +1,4 @@
 import './css/style.css';
-//import { Ship } from './ship.js';
-import { GameBoard } from './gameBoard.js'
 import { Player } from './player.js';
 
 const container = document.getElementById('container');
@@ -37,7 +35,7 @@ container.append(instruction);
 const player1 = new Player("Roy");
 
 let shipCounter = 0;
-console.log("shipCounter: " + shipCounter)
+//console.log("shipCounter: " + shipCounter)
 
 const handleShips = (event) => {
   
@@ -48,13 +46,13 @@ const handleShips = (event) => {
     locClassArr.push(parseInt(locClass[0]));
     locClassArr.push(parseInt(locClass[2]));
     
-    console.log("Clicked on: " + locClassArr)
+    //console.log("Clicked on: " + locClassArr)
     let placed = player1.makeShip(shipCounter, locClassArr);
     
     if (placed) {
       shipCounter++;
       const usedLoc = player1.used
-      console.log("Used loc is: " + usedLoc)
+      //console.log("Used loc is: " + usedLoc)
 
       for (let element of usedLoc) {
         let theButton = document.getElementsByClassName(element);
@@ -70,7 +68,7 @@ const handleShips = (event) => {
         start.textContent = "Start";
         start.classList.add("start");
         container.append(start);
-        console.log("event removed")
+        //console.log("event removed")
       }
     }
   }
